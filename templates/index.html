@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spam Check</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <!-- <link rel="stylesheet" href="/static/style.css"> -->
+</head>
+<body>
+
+  <!-- ===========pop up notice=========== -->
+  <div id="consentPopup" class="popup-overlay">
+    <div class="popup-content">
+      <h2>Data Notice</h2>
+      <p>
+        The emails you check in this web app will be saved to our database to help us improve our spam detection model.
+      </p>
+      <button id="closePopup">Got it!</button>
+    </div>
+  </div>
+
+  <!-- ==============container start================ -->
+  <div class="container">
+    <h1>SPAM CHECK</h1>
+
+    <!-- ===============form start============ -->
+    <form method="POST">
+      <textarea name="email_body" placeholder="Paste your email text here..." required></textarea>
+      <button type="submit">Check Email</button>
+    </form>
+    <!-- ===============form end============ -->
+    
+<!-- ===================================================================================================================== -->
+
+    <!-- ===============result div start============ -->
+    {% if result %}
+      <div class="result">
+        <p><strong>Prediction:</strong> {{ result }}</p>
+          <!-- ===============prediction confidence bar============ -->
+          <div class="progress-bar">
+            <div
+              class="progress-fill {{ result | lower }}"
+              style="width: {{ confidence[:-1] }}%">
+            </div>
+          </div>
+        <p><strong>Confidence:</strong> {{ confidence }}</p>
+      </div>
+    {% endif %}
+    <!-- ===============result div ends============ -->
+
+<!-- ===================================================================================================================== -->
+
+    <!-- ===============disclaimer start============ -->    
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/disclaimer" class="disclaimer" style="color:#000; text-decoration:none;">Disclaimer & Safety Tips</a>
+    </p>
+    <!-- ===============disclaimer ends============ -->    
+
+    <!-- ==============footer================ -->
+    <footer class="footer">
+      <p>Design and Developed by</p>
+      <h3>Imandi Kesava Bhavani Raju</h3>
+      <div class="social-links">
+        <a href="https://github.com/kesavaimandi" target="_blank">GitHub</a> |
+        <a href="https://www.linkedin.com/in/imandi-kesava" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+<!-- ==============container ends================ -->
+
+<!-- js for consent popup with sessionStorage, hide the popup -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => 
+    {
+      const popup = document.getElementById('consentPopup');
+      const closeBtn = document.getElementById('closePopup');
+
+      if (sessionStorage.getItem('consentAccepted')) 
+      {
+        popup.style.display = 'none';
+      }
+
+      closeBtn.addEventListener('click', () => 
+      {
+        popup.style.display = 'none';
+        sessionStorage.setItem('consentAccepted', 'true');
+      });
+    });
+  </script>
+</body>
+</html>
