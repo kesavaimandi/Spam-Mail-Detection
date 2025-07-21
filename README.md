@@ -8,7 +8,7 @@ This is a simple **Spam Email Classifier** web application built with:
 - **HTML, CSS, JS** with a clean, glassmorphic UI
 
 ---
-![screenshot](index_page.png)
+![screenshot](indexpage.png)
 
 ## Features
 
